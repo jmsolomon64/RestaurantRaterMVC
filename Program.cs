@@ -1,7 +1,14 @@
+using Microsoft.EntityFrameworkCore;
+using RestaurantRaterMVC.Data;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddHttpsRedirection(options => options.HttpsPort = 443);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddDbContext<RestaurantRaterDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))); //gets db context through secret connection string
 
 var app = builder.Build();
 

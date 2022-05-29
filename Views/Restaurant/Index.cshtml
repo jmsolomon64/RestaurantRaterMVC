@@ -1,0 +1,48 @@
+@model IEnumerable<RestaurantRaterMVC.Models.Restaurant.RestaurantListItem>
+
+@{
+    ViewData["Title"] = "Restaurant Index";
+}
+
+<h1>Restaurant Index</h1>
+<p>
+    <a asp-action="Create">Create Restaurant</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayName(model => model.Score)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model) //loops through every item in enumerable list of Models
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @if (item.Score > 0)
+                    {
+                        @Html.DisplayFor(modelItem => item.Score)
+                    }
+                    else
+                    {
+                        <span>No Ratings Yet</span>
+                    }
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", "Restaurant", new { id = item.Id}) |
+                    @Html.ActionLink("Details", "Details", "Details", new { id = item.Id}) | 
+                    @Html.ActionLink("Delete", "Delete", "Restaurant", new { id = item.Id}) 
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
