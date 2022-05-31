@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RestaurantRaterMVC.Data;
 using RestaurantRaterMVC.Models.Restaurant;
+using System.Threading;
 
 namespace RestaurantRaterMVC.Controllers
 {
@@ -56,5 +57,26 @@ namespace RestaurantRaterMVC.Controllers
 
             return RedirectToAction(nameof(Index)); //bring user back to Index view of Restaurants
         }
+
+        // [ActionName("Details")]
+        // public async Task<IActionResult> Restaurant(int id)
+        // {
+        //     Restaurant restaurant = _context.Restaurants
+        //     .Include(r => r.Ratings)
+        //     .FirstOrDefault(r => r.Id == id);
+
+        //     if (restaurant == null)
+        //     {
+        //         return RedirectToAction(nameof(Index));
+        //     }
+
+        //     RestaurantDetail restaurantDetail = new RestaurantDetail()
+        //     {
+        //         Id = restaurant.Id,
+        //         Name = restaurant.Name,
+        //         Location = restaurant.Location,
+        //         Score = restaurant.Score
+        //     };
+        // }
     }
 }
