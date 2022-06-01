@@ -2,11 +2,14 @@ using System.ComponentModel.DataAnnotations;
 
 namespace RestaurantRaterMVC.Models.Restaurant
 {
-    public class RestaurantListItem
+    public class RestaurantEdit
     {
         public int Id {get; set;}
+        [Required]
+        [StringLength(100)]
         public string Name {get; set;}
-        [Display(Name = "Average Score")]
-        public double Score {get; set;}
+        [Required]
+        [StringLength(100)]
+        public string Location {get; set;}
     }
 }

@@ -12,5 +12,6 @@ namespace RestaurantRaterMVC.Data
         public int RestaurantId {get; set;}
         [Required]
         public double Score {get; set;}
+        public virtual Restaurant Restaurant {get; set;}
     }
 }

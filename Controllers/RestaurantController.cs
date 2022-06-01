@@ -58,25 +58,72 @@ namespace RestaurantRaterMVC.Controllers
             return RedirectToAction(nameof(Index)); //bring user back to Index view of Restaurants
         }
 
-        // [ActionName("Details")]
-        // public async Task<IActionResult> Restaurant(int id)
-        // {
-        //     Restaurant restaurant = _context.Restaurants
-        //     .Include(r => r.Ratings)
-        //     .FirstOrDefault(r => r.Id == id);
+        [ActionName("Details")]
+        public async Task<IActionResult> Restaurant(int id)
+        {
+            Restaurant restaurant = _context.Restaurants
+            .Include(r => r.Ratings)
+            .FirstOrDefault(r => r.Id == id);
 
-        //     if (restaurant == null)
-        //     {
-        //         return RedirectToAction(nameof(Index));
-        //     }
+            if (restaurant == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
 
-        //     RestaurantDetail restaurantDetail = new RestaurantDetail()
-        //     {
-        //         Id = restaurant.Id,
-        //         Name = restaurant.Name,
-        //         Location = restaurant.Location,
-        //         Score = restaurant.Score
-        //     };
-        // }
+            RestaurantDetail restaurantDetail = new RestaurantDetail()
+            {
+                Id = restaurant.Id,
+                Name = restaurant.Name,
+                Location = restaurant.Location,
+                Score = restaurant.Score
+            };
+
+            return View(restaurantDetail);
+        }
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            Restaurant restaurant = await _context.Restaurants.FindAsync(id); //strores a restaurant from the dbset that matches Id
+
+
+            //Redirects back to index if Id doesn't exist
+            if (restaurant == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            //Sets restaurantEdit properties equal to Restaurant properties
+            RestaurantEdit restaurantEdit = new RestaurantEdit()
+            {
+                Id = restaurant.Id,
+                Name = restaurant.Name,
+                Location = restaurant.Location
+            };
+
+            return View(restaurantEdit);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, RestaurantEdit model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(ModelState);
+            }
+
+            //gets restaurant by id and if null returns to index
+            Restaurant restaurant = await _context.Restaurants.FindAsync(id);
+            if(restaurant == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            //sets Restaurants properties equal to the new ones in RestaurantEdit
+            restaurant.Name = model.Name;
+            restaurant.Location = model.Location;
+            await _context.SaveChangesAsync();
+            
+            return RedirectToAction("Details", new {id = restaurant.Id});
+        }
     }
 }

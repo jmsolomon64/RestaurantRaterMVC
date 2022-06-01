@@ -16,7 +16,7 @@
                 @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
-                @* @Html.DisplayName(model => model.Score) *@
+                @Html.DisplayNameFor(model => model.Score)
             </th>
         </tr>
     </thead>
@@ -39,7 +39,7 @@
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", "Restaurant", new { id = item.Id}) |
-                    @Html.ActionLink("Details", "Details", "Details", new { id = item.Id}) | 
+                    <a asp-action="Details" asp-route-id=@item.Id>Details</a> |
                     @Html.ActionLink("Delete", "Delete", "Restaurant", new { id = item.Id}) 
                 </td>
             </tr>
